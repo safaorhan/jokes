@@ -7,7 +7,8 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import com.safaorhan.jokes.ui.JokeScreen
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,8 +25,8 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background
                 ) {
-                    val uiState = viewModel.state.collectAsState()
-                    JokeScreen(uiState.value, viewModel::onRefreshButtonClick)
+                    val uiState by viewModel.state.observeAsState()
+                    JokeScreen(uiState, viewModel::onRefreshButtonClick)
                 }
             }
         }

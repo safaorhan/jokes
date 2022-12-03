@@ -12,16 +12,16 @@ import androidx.compose.ui.unit.sp
 import com.safaorhan.jokes.JokeState
 
 @Composable
-fun JokeScreen(uiState: JokeState, onRefreshJokeClick: () -> Unit) {
+fun JokeScreen(uiState: JokeState?, onRefreshJokeClick: () -> Unit) = uiState?.let {
     Column {
         TopAppBar(title = { Text(text = "Jokes") })
 
         Column(modifier = Modifier.padding(all = 16.dp)) {
-            Text(text = uiState.joke.orEmpty(), fontSize = 24.sp)
+            Text(text = it.joke.orEmpty(), fontSize = 24.sp)
 
-            if (uiState.error != null) {
+            if (it.error != null) {
                 Text(
-                    text = uiState.error,
+                    text = it.error,
                     color = Color.Red,
                     modifier = Modifier.padding(top = 16.dp),
                     fontSize = 18.sp
@@ -38,7 +38,7 @@ fun JokeScreen(uiState: JokeState, onRefreshJokeClick: () -> Unit) {
                 Text("Refresh")
             }
 
-            if (uiState.isLoading) {
+            if (it.isLoading) {
                 CircularProgressIndicator(
                     modifier = Modifier
                         .padding(top = 16.dp)
